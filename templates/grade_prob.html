@@ -1,0 +1,60 @@
+$def with (first_name,stud_id,prob_id,prob,fname,lname,nItems,rubrics,evaluating)
+
+$var logged_in = True
+$var user = first_name
+$var title = 'Grading problem ' + prob +' for '+ fname + ' ' + lname
+$var jsfiles = 'slide_prob_rub.js,grade_prob.js'
+$var cssfiles = 'grade_prob_rub.css'
+
+<div>
+    <form method="post" action="/grading/gradeProblem">
+        $for n in range(nItems):
+            $ addClass = ' active' if n == 0 else ''
+            <!--<div class="$('form-panel'+addClass)">-->
+            <div class="floating-box">    
+                $if nItems > 1:
+                    <h4> Evaluating item $str(n+1)</h4>
+                <div>
+                    <span>This problem evaluates: </span>
+                    <ul style="color:#D35400">
+                        $if ";" in evaluating[n]:
+                            $for concept in evaluating[n].split(";"):
+                                <li style="max-width:100%;"> $concept</li>
+                        $else:
+                            <li style="max-width:100%;"> $evaluating[n]</li>
+                    </ul> 
+                    <span style='color:black'>Enter student's answer: </span><br>
+                    <textarea name="$('answer'+str(n+1))" value="" rows="4" cols="30"></textarea><br>
+                    <p><b>Select what applies</b>: </p>
+                </div>    
+                <div id="$('rub-defined'+str(n))">    
+                    $for m in range(len(rubrics.index)):
+                        <input class="checkbox" type="checkbox" name="$('d' + str(n+1) + str(m))" value="checked"> 
+                        $rubrics.iloc[m,0]<br>
+                    <span id="$('manualCheck'+str(n))" style="color:blue">
+                        <input class="checkbox" type="checkbox" onclick="$('addManual('+str(n)+');')">
+                        Add manual deduction
+                    </span>
+                </div>
+                <div id="$('rub-topical'+str(n))" style="display:none">
+                
+                </div>
+            </div>
+            <!--</div>-->
+    <!--<a class="previous">Previous | </a>-->
+    <!--<a class="next">Next</a>        -->
+        <br><br>
+    $ ps = 'p,' + str(prob_id-1) + ',s,' + str(stud_id-1)
+    <input type="hidden" name="which" value="$ps">
+    <input type="submit" value="Apply">
+    </form>   
+</div>
+
+<div>
+    <form id="nhi" method="post" action="/grading/gradeProblem">
+        $# Send the server which problem was not handed in
+        <button class="button" onclick="$('range_nhi('+str(stud_id-1)+');')"> 
+            Not handed in 
+        </button>
+    </form>   
+</div>

@@ -1,0 +1,65 @@
+$def with (course,grades)
+
+<html>
+    <head>
+        <title>GradeFeed</title>
+    </head>
+    <style>
+        table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                }
+        th, td {
+            padding: 5px;
+            }
+        td {
+            background-color: #D4E6F1;
+        }    
+        th {
+            text-align: center;
+            background-color: #D5D8DC;
+            }
+        input[type=button], input[type=submit], input[type=reset] {
+            background-color: #AAB7B8;
+            border: none;
+            color: white;
+            padding: 6px 8px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+            }
+        input[type="text"], textarea {
+                background-color : #A9CCE3; 
+            }     
+    </style>
+    <body>
+
+    <h3 text-align="center"> View grade </h3>
+    
+    Your grades for the course $course are shown below.
+    <br><br>
+    
+    $ tab_cols = list(grades)
+    
+    <table>
+        <tr>
+            <th> </th>
+            $for k in range(len(tab_cols)):
+                <th> $tab_cols[k] </th>
+        </tr>
+        <tr>
+            <td> Your grade</td>
+            $for k in range(len(tab_cols)):
+                <td> $grades.ix[0,k]</td>
+        </tr>    
+        <tr>
+            <td> Course Median</td>
+            $for k in range(len(tab_cols)):
+                <td> $grades.ix[1,k]</td>
+        </tr>    
+    </table>    
+    
+    </body>
+</html>

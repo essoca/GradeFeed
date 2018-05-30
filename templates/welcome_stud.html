@@ -1,0 +1,51 @@
+$def with (user,session)
+
+<html>
+    <head>
+        <title>Gradefeed</title>
+        <style>
+            input[type=button], input[type=submit], input[type=reset] {
+            background-color: #AAB7B8;
+            border: none;
+            color: white;
+            padding: 6px 8px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+            }
+            input[type="text"], textarea {
+                background-color : #A9CCE3; 
+            } 
+            .checkbox, .radio {
+            background:transparent;
+            cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+    
+    $if not session['joined_course']:
+        <h3 text-align="center"> Welcome to Gradefeed, $user.first_name. </h3>
+    
+        What do you want to do? <br><br>
+    
+    $elif session['searched_course']:    
+        <h3 text-align="center"> You're not in the roster of $session['new_course'], $user.first_name. </h3>
+        
+         What do you want to do now? <br><br>
+        
+    $else:
+        <h3 text-align="center"> You have joined $session['new_course'], $user.first_name. </h3>
+    
+        What do you want to do now? <br><br>
+    
+    <form method='post' action='welcome_stud'>
+        <input class="radio" type="radio" name="task" value="join_course"> Join course <br>
+        <input class="radio" type="radio" name="task" value="view_grade"> View grades <br><br>
+        <input type="submit" value="Submit" id="submit" />
+    </form>    
+    
+    </body>
+</html>

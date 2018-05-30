@@ -1,0 +1,63 @@
+$def with (sum_score_brkdown,num_prob,max_grade,prob_score,user_first_name,manual_distr,reset)
+
+$var logged_in = True
+$var user = user_first_name
+$var title = 'Score breakdown'
+$var jsfiles = ''
+$var cssfiles = ''
+
+<p>Modify the table of scores at your convenience.</p>
+<br> 
+
+$ tab_cols = list(prob_score)
+$if reset:
+    $ ncols = len(tab_cols)-1
+$else:
+    $ ncols = len(tab_cols)
+    
+<form id="form_editable" method="post" action="score_brkdown">
+    <table>
+        <tr>
+            $for k in range(ncols):
+                <th> $tab_cols[k] </th>
+        </tr>
+        $for rowj in range(num_prob):
+            <tr>
+                $for colk in range(ncols):
+                    $if colk == 0 or colk == 1 or colk == 2:
+                        <td> $prob_score.ix[rowj,colk] </td>
+                    $else:
+                        $if manual_distr:
+                            <td>
+                                <input type="text" form="form_editable" 
+                                name=$('e' + str(rowj+1) + str(colk+1))
+                                id=$('e' + str(rowj+1) + str(colk+1))
+                                value="">
+                            </td>    
+                        $else:
+                            <td> $prob_score.ix[rowj,colk] </td>
+            </tr>    
+    </table>
+    $code:
+        if sum_score_brkdown != max_grade:
+            mxg_warning = 'Total score ' + str(sum_score_brkdown) + \
+                          ' does not match max grade ' + str(max_grade)
+        else:
+            mxg_warning = 'Total score ' + str(sum_score_brkdown) + \
+                          ' matches max grade ' + str(max_grade)
+    $if reset:  
+        <span><br> Distribution of the maximum grade over problems: 
+            <select name="grade_distr">
+                <option value="even"> Evenly distributed</option>
+                <option value="weight_items"> Weight multi-items more</option>
+                <option value="manual"> Manual</option>
+            </select>      
+            <br><br>
+        </span>  
+        <input type="submit" value="Submit">
+    $else:
+        <span><br> $mxg_warning<br><br></span>    
+        <input type="submit" name="continue" value="Continue">
+    <input type="submit" name="reset" value="Reset">
+</form>    
+

@@ -1,0 +1,15 @@
+
+.floating-box {
+    display: inline-block;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid #E5E8E8;  
+}
+
+.floating-topical {
+    display: inline-block;
+}
+
+.form-panel:not(.active) {
+    display:none;
+}

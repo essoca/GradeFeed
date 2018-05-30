@@ -1,0 +1,47 @@
+$def with (num_prob,prob_score,probs_defined,first_name)
+
+$var logged_in = True
+$var user = first_name
+$var title = 'Problem definition'
+$var jsfiles = ''
+$var cssfiles = ''
+
+<p>Assign labels to the problems and the number of items for each.</p>
+<p> For each problem/item write concisely what you are evaluating.</p>
+<br> 
+
+$ tab_cols = list(prob_score)
+<form id="form_editable" method="post" action="score_brkdown">
+    <table>
+        <tr>
+            $for k in range(len(tab_cols)):
+                <th> $tab_cols[k] </th>
+        </tr>
+        $for rowj in range(num_prob):
+            <tr>
+                $for colk in range(len(tab_cols)):
+                    $if probs_defined:
+                        <td> $prob_score.ix[rowj,colk] </td>
+                    $else:
+                        <td>
+                            <input type="text" form="form_editable" 
+                            name=$('e' + str(rowj+1) + str(colk+1))
+                            id=$('e' + str(rowj+1) + str(colk+1))
+                            value = "$prob_score.ix[rowj,colk]">
+                        </td>    
+            </tr>    
+    </table>
+    
+    <span><br> Distribution of the maximum grade over problems: 
+        <select name="grade_distr">
+            <option value="even"> Evenly distributed</option>
+            <option value="weight_items"> Weight multi-items more</option>
+            <option value="manual"> Manual</option>
+        </select>        
+    </span>    
+    <br><br>
+    $if not probs_defined:
+        <input type="hidden" name="got_prob_labels">
+    <input type="submit" value="Submit">
+</form>    
+

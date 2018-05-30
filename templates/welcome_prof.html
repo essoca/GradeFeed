@@ -1,0 +1,20 @@
+$def with (first_name,session)
+
+$var logged_in = True
+$var user = first_name
+$var jsfiles = ''
+$var cssfiles = ''
+    
+$if session['signed_up']:
+    <p> In order to start grading, you first need to build a course.</p>
+    $var title = 'Welcome'
+$else:
+    $if not session['is_new_course']:
+        <p> Grade a new assignment or view previous grades.</p>
+        $var title = 'Welcome back'
+    $else:
+        <p> The course <span style="color:#D35400">$session['new_course']</span> was 
+            created, $first_name. 
+        </p>
+        <p> You are now ready to grade an assigment for this course.</p>
+        $var title = 'Course created'

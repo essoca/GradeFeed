@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <style>
+            .vote-result { display: none; }
+            .vote-result.first { display: block; }
+            .off{display:none;}
+        </style>
+    </head>
+    <body>
+        
+    <a class="back-btn off">Back</a> | <a class="next-btn">Next</a>
+
+    <div class="vote-result first selectedDiv">
+      this is example copy
+    </div>
+    
+    <div class="vote-result">
+      this is some more copy
+    </div>
+    
+    <div class="vote-result">
+      some more copy
+    </div>
+    
+    <div class="vote-result last">
+      this is the last div
+    </div>    
+        
+    <script>
+        $(".back-btn").click(function(){debugger;
+        var prevElement=$('.selectedDiv').prev();
+        prevElement.show();
+        $(".selectedDiv").hide();                         
+        $(".selectedDiv").removeClass("selectedDiv");
+        prevElement.addClass("selectedDiv");                            
+                                
+       if($('.first').css('display')=="block"){
+           $(".back-btn").addClass("off");
+       }
+       else{
+        $(".next-btn").removeClass("off");  
+       }
+      });
+
+        $(".next-btn").click(function(){debugger;
+            var nextElement= $('.selectedDiv').next();
+            nextElement.show();
+            $(".selectedDiv").hide();                         
+            $(".selectedDiv").removeClass("selectedDiv");
+            nextElement.addClass("selectedDiv");
+            if($('.last').css('display')=="block"){
+              $(".next-btn").addClass("off");
+           }
+           else{
+             $(".back-btn").removeClass("off");  
+           }
+        });
+    </script>
+    </body>
+</html>

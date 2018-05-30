@@ -1,0 +1,31 @@
+$def with (courses,user)
+
+$var logged_in = True
+$var user = user.first_name
+$var title = 'New assignment'
+$var jsfiles = ''
+$var cssfiles = ''
+
+<form id="uploadbanner" enctype="multipart/form-data" method="post" action="grading_setup"> 
+    <span> Which course do you want to grade: 
+        <select name="course">
+            $for course in courses: 
+                  <option value=$course>$course</option>
+        </select>    
+    </span>
+    <br><br>
+    <span>
+        Enter and identifier for this assignment: 
+        <input type="text" name = "assignment_id" placeholder="hw1" maxlength='4' size='4'>
+    </span>
+    <br><br>
+    <span> Enter the number of problems to grade: 
+        <input id = "num_prob" type="text" name="num_prob" maxlength='2' size='2'/>
+    </span>
+    <br><br>
+    <span> Enter maximum grade: 
+        <input id = "maxgrade" type="text" name="maxgrade" maxlength='3' size='2'/>
+    </span>
+    <br> <br>
+    <input type="submit" value="Submit" id="submit" />
+<form/>

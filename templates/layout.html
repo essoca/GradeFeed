@@ -1,0 +1,81 @@
+$def with (page)
+<!DOCTYPE html>
+<html>
+	<head>
+
+    	<title>GradeFeed</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<meta name="author" content="E. Solano-Carrillo" />
+		<meta name="description" content="" />
+
+		<link rel="stylesheet" href="/static/style/main.css" type="text/css" media="screen" charset="utf-8"/>
+		$if not page.logged_in:
+			<link rel="stylesheet" href="/static/style/login.css" type="text/css" media="screen" charset="utf-8"/>
+		$if len(page.cssfiles) != 0: 
+			$for fc in page.cssfiles.split(','):	
+				<link rel="stylesheet" href="/static/style/$fc" type="text/css" media="screen" charset="utf-8"/>	
+		$if len(page.jsfiles) != 0: 
+			$for fj in page.jsfiles.split(','):
+				<script type="text/javascript" src="static/script/$fj"></script>
+
+		<script>
+		/* When the user clicks on the button, 
+		toggle between hiding and showing the dropdown content */
+		function myFunction() {
+		    document.getElementById("myDropdown").classList.toggle("show");
+		}
+		
+		// Close the dropdown if the user clicks outside of it
+		window.onclick = function(event) {
+		  if (!event.target.matches('.dropbtn')) {
+		
+		    var dropdowns = document.getElementsByClassName("dropdown-content");
+		    var i;
+		    for (i = 0; i < dropdowns.length; i++) {
+		      var openDropdown = dropdowns[i];
+		      if (openDropdown.classList.contains('show')) {
+		        openDropdown.classList.remove('show');
+		      }
+		    }
+		  }
+		}
+		</script>
+
+	</head>
+	<body>
+
+	<div id="page">
+		<div id="logo">
+			<h1><a href="/" id="logoLink"><span style="color:#D35400">GradeFeed</span></a></h1>
+			$if page.logged_in:
+				<p><span>$page.user</span></p>		
+		</div>
+		$if page.logged_in:
+			<div id="nav">
+				<ul>
+					<li><a href="/build_course">New Course</a></li>
+					<li><a href="/grading_setup">Grade</a></li>
+					<li><a href="#">View Grades</a></li>
+				</ul>	
+			</div>
+			<div class="dropdown">
+				<img src="/static/images/yayo2.jpg" alt="My photo" 
+				 style = "width:15%; height:15%"
+				 onclick="myFunction()" class="dropbtn">
+				  <div id="myDropdown" class="dropdown-content">
+				  	<a href="/build_course">New course</a>
+				    <a href="#home">My courses</a>
+			 	  </div>
+			</div>
+		<div id="content">
+			<h2>$page.title</h2>
+			$:page
+		</div>
+		<div id="footer">
+			<p>
+				 by <a href="/" target="_blank">E. Solano-Carrillo</a>
+			</p>
+		</div>
+	</div>
+	</body>
+</html>

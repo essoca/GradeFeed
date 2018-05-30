@@ -1,0 +1,40 @@
+$def with (first_name,data_dir,roster_g,mean,median,std,maxg,ming)
+
+$var logged_in = True
+$var user = first_name
+$var title = 'Graded'
+$var jsfiles = ''
+$var cssfiles = ''
+
+    
+<p>Below is the final grade for each student and some statistics.</p>
+<br> 
+
+<span>The mean grade was: $str(mean)</span><br>
+<span>The median grade was: $str(median)</span><br>
+<span>The standard deviation was: $str(std)</span><br>
+<span>The best grade was: $str(maxg)</span><br>
+<span>The worst grade was: $str(ming)</span><br>
+<br><br>
+
+$ tab_cols = list(roster_g)
+
+<form id="form_editable">
+    <table>
+        <tr>
+        $for k in range(len(tab_cols)):
+            <th> $tab_cols[k] </th>
+        </tr>
+        $for rowj in range(len(roster_g.index)):
+            <tr>
+                $for colk in range(len(tab_cols)):
+                    <td> $str(roster_g.ix[rowj,colk]) </td>
+            </tr>    
+    </table>    
+    <br>
+</form>    
+
+<a href="$(data_dir + 'roster_graded.csv')" download="'roster_graded.csv'"> 
+    <button> Download</button>
+</a>
+    

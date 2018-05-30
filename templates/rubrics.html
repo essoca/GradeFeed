@@ -1,0 +1,99 @@
+$def with (rubrics,first_name,num_elems,num_elems_global,action)
+
+$var logged_in = True
+$var user = first_name
+$var title = 'Rubrics'
+$var jsfiles = ''
+$var cssfiles = ''
+
+    <p> Enter reasons for deduction of points together with % amount.</p>
+    <br> 
+    
+    $ tab_cols = list(rubrics)
+    
+    $if action == 'global' or action == 'commit':
+        
+        <form id="form_editable" method="post" action="rubrics">
+            <table>
+                <tr>
+                    $for k in range(len(tab_cols)):
+                         <th> $tab_cols[k] </th>
+                </tr>
+                $for rowj in range(num_elems):
+                    <tr>
+                        $for colk in range(len(tab_cols)):
+                            $if action == 'commit':
+                                <td> $rubrics.ix[rowj,colk] </td>
+                            $else: 
+                                $if colk != 0:
+                                    <td>
+                                        <input type="text" form="form_editable" 
+                                            name=$('e' + str(rowj+1) + str(colk+1))
+                                            id=$('e' + str(rowj+1) + str(colk+1))
+                                            value="$rubrics.ix[rowj,colk]"
+                                            maxlength='3' size='2'>
+                                    </td>    
+                                $else:
+                                    <td> $rubrics.ix[rowj,colk] </td>
+                    </tr>   
+            </table>
+            <br>
+            <input type="submit" name="add_deduction" value="Add deduction" form="form_editable">
+            <input type="submit" name="commit_changes" value="Commit changes" form="form_editable">
+        </form> 
+        <p> You can change this later as you grade.</p>
+        <form method="get" action="grading">
+            <input type="submit" value="Continue to grading">
+        </form>
+        
+    $else:
+    
+        <form id="form_editable" method="post" action="rubrics">
+            <table>
+                <tr>
+                    $for k in range(len(tab_cols)):
+                        <th> $tab_cols[k] </th>
+                </tr>
+                $for rowj in range(num_elems):
+                    <tr>
+                        $for colk in range(len(tab_cols)):
+                            $if rowj+1 <= num_elems_global and colk != 0:
+                                <td>
+                                    <input type="text" form="form_editable" 
+                                        name=$('e' + str(rowj+1) + str(colk+1))
+                                        id=$('e' + str(rowj+1) + str(colk+1))
+                                        value="$rubrics.ix[rowj,colk]"
+                                        maxlength='3' size='2'>
+                                </td>    
+                            $elif rowj+1 > num_elems_global:
+                                <td>
+                                    <input type="text" form="form_editable" 
+                                        name=$('e' + str(rowj+1) + str(colk+1))
+                                        id=$('e' + str(rowj+1) + str(colk+1))
+                                        value="$rubrics.ix[rowj,colk]"
+                                        $if k==1: maxlength='3' size='2'
+                                    >
+                                </td>    
+                            $else:
+                                <td> $rubrics.ix[rowj,colk] </td>
+                    </tr>   
+                <tr>
+                $for k in range(2):
+                    <td>
+                        <input type="text" form="form_editable" 
+                            name=$('e_'+ str(num_elems+1)+ '_' + str(k+1))
+                            id=$('e'+ str(num_elems+1) + str(k+1))
+                            value=" "
+                            $if k==1: maxlength='3' size='2'
+                        >
+                    </td>
+                </tr>    
+            </table>
+            <br>
+            <input type="submit" name="add_deduction" value="Add deduction" form="form_editable">
+            <input type="submit" name="commit_changes" value="Commit changes" form="form_editable">
+        </form>  
+        
+        <form method="get" action="grading">
+            <input type="submit" value="Continue to grading">
+        </form>

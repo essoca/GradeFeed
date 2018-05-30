@@ -1,0 +1,17 @@
+$def with (first_name)
+
+$var logged_in = True
+$var user = first_name
+$var title = 'Build course'
+$var jsfiles = ''
+$var cssfiles = ''
+
+<p>Let us start putting and identifier to the course and uploading the roster.</p>
+<hr><br>
+<form id="uploadbanner" enctype="multipart/form-data" method="post" action="build_course"> 
+    <span> Enter ID for the course: <input type="text" name="courseId" /></span>
+    <br><br>
+    <span> Upload csv file with roster:   <input id="file_roster" name="file_roster" type="file" /></span>
+    <br> <br>
+    <input type="submit" value="Submit" id="submit" />
+<form/>   

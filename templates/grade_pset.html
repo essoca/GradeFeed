@@ -1,0 +1,45 @@
+$def with (first_name, roster_mxg, roster_g)
+
+$var logged_in = True
+$var user = first_name
+$var title = 'Grading'
+$var jsfiles = ''
+$var cssfiles = ''
+
+
+<p> Click on each cell and select deductions that apply.</p>
+<br> 
+
+$ tab_cols = list(roster_mxg)
+
+<form id="form_editable" method="post" action="grading">
+    <div style="overflow-x:auto;">
+        <table>
+            <tr>
+                $for k in range(len(tab_cols)):
+                    <th> $tab_cols[k] </th>
+            </tr>
+            $for rowj in range(len(roster_mxg.index)):
+                <tr>
+                    $for colk in range(len(tab_cols)):
+                        $if colk != 0 and colk != 1:
+                            $if roster_mxg.ix[rowj,colk] == roster_g.ix[rowj,colk]:
+                                <td>
+                                    <input type="submit" form="form_editable" 
+                                        name=$('e_' + str(rowj+1) + '_' + str(colk+1))
+                                        id=$('e_' + str(rowj+1) + '_' + str(colk+1))
+                                        value="grade" maxlength='4' size='4'>
+                                </td>  
+                            $else: 
+                                <!--<td bgcolor="#81d3ee"> $str(roster_g.ix[rowj,colk]) </td>-->
+                                <td class="graded"> $str(roster_g.ix[rowj,colk]) </td>
+                        $else:
+                            <td> $roster_mxg.ix[rowj,colk] </td>
+                </tr>   
+        </table>
+    </div>
+</form> 
+
+<form method="get" action="graded">
+    <input type="submit" value="Finished!">
+</form>    

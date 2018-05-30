@@ -1,0 +1,66 @@
+$def with (prof_found,*args)
+
+$if len(args) != 0:
+    $ profs, profs_unames, courses = args
+
+<html>
+    <head>
+        <title>GradeFeed</title>
+        <style>
+            input[type=button], input[type=submit], input[type=reset] {
+            background-color: #AAB7B8;
+            border: none;
+            color: white;
+            padding: 6px 8px;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            margin: 4px 2px;
+            cursor: pointer;
+            }
+            input[type=text] {
+            width: 130px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url('/static/search_icon.png');
+            /*background-position: 1px 1px; */
+            background-repeat: no-repeat;
+            /*padding: 12px 20px 12px 40px;*/
+            height:30px;
+            padding-left:40px;   
+            }
+        </style>
+    </head>
+    <body>
+        <h3> Search your professor by last name. </h3>
+        <form id="search-form" name="search" method="post" action="join_course"> 
+            <input id="search-input" type="text" name="search" placeholder="Search">
+            <input type="submit" value="Submit" id="submit" />
+        <form/>   
+        $if prof_found:
+            <br><br>
+            The following matched your search:
+            <br>
+            <form method="post" action="join_course">
+                <ul>
+                $for k in range(len(profs)):
+                    <li>
+                        $profs[k]
+                        <select name="course">
+                            $for j in range(len(courses)):
+                                $ list_courses = courses[k].split(',')
+                                $for m in range(len(list_courses)):
+                                    <option value="$list_courses[m]">
+                                        $list_courses[m]
+                                    </option>  
+                            <input type="submit" value="Join course">
+                            <input type="hidden" name="prof_username" value="$profs_unames[k]">
+                        </select>    
+                    </li>    
+                </ol>
+            </form>    
+    </body>
+</html>

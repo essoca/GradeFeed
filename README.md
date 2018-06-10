@@ -1,5 +1,5 @@
 # GradeFeed
-Web app written in Python (using [web.py](http://webpy.org/)) to grade problem sets based on rubrics that the user defines. This can be run, for instance, in [cloud9](https://aws.amazon.com/cloud9/). 
+Web app written in Python (using [web.py](http://webpy.org/)) to grade problem sets based on rubrics that the user defines. I have been running it in [cloud9](https://aws.amazon.com/cloud9/). 
 
 The workflow is pretty simple:
 
